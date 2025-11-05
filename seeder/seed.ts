@@ -1,4 +1,10 @@
 import mongoose, { Schema } from "mongoose";
+import bcrypt from 'bcryptjs';
+
+const userSchema = new Schema({
+    email: String,
+    password: String
+});
 
 const permissionSchema = new Schema({
     name: String,
@@ -7,16 +13,20 @@ const permissionSchema = new Schema({
 
 const roleSchema = new Schema({
     name: String,
-    permissions: [{ type: mongoose.Types.ObjectId, ref: 'permission' }]
+    permissions: [{ type: mongoose.Types.ObjectId, ref: 'permissionsdocuments' }]
 });
 
 async function seed() {
     const connection = await mongoose.connect('mongodb://localhost:27017/cms');
-    console.log('Began to seed...');
-    const permissionModel = connection.model('permission', permissionSchema);
+    console.log('Seeding user...');
+    const user_model = connection.model('userdocuments', userSchema);
+    await user_model.insertOne({ email: 'john@email.com', password: await bcrypt.hash('123456', 10), role: 'admin' });
+
+    console.log('Seeding permissions...');
+    const permissionModel = connection.model('permissionsdocuments', permissionSchema);
     await permissionModel.insertMany(permissions);
 
-    const role_model = connection.model('role', roleSchema);
+    const role_model = connection.model('roledocuments', roleSchema);
 
     console.log('Seeding admin...');
     const admin_permissions = await permissionModel.find({ name: { $in: permissions.map(elem => elem.name) } }).select('_id').exec();

@@ -8,7 +8,7 @@ export class RoleDocument extends AbstractDocument {
     name: string;
 
     @Prop()
-    permissions: [mongoose.Types.ObjectId];
+    permissions: [{ type: mongoose.Types.ObjectId, ref: 'permission'; }];
 }
 
 export const RoleSchema = SchemaFactory.createForClass(RoleDocument);

@@ -6,6 +6,7 @@ import { SignUpDto } from './dto/signup.dto';
 import { RoleDocument } from '@app/common/schemas/role.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
+import { GetUserDto } from './dto/get-user.dto';
 
 @Injectable()
 export class UserService {
@@ -49,7 +50,7 @@ export class UserService {
                 { $match: { name: role } },
                 {
                     $lookup: {
-                        from: 'permissions',
+                        from: 'permissionsdocuments',
                         localField: 'permissions',
                         foreignField: "_id",
                         as: 'matching_permissions'
@@ -68,7 +69,11 @@ export class UserService {
             ],
             { lean: true }
         );
-        console.log('RESULTS IN REQUIRED PERMISSION GUARD ARE: ', is_allowed);
-        return true;
+        
+        return is_allowed.length > 0;
+    }
+
+    async getUser(getUserDto: GetUserDto) {
+        return this.userRepository.findOne(getUserDto);
     }
 }

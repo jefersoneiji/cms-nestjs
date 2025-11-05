@@ -19,7 +19,7 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
             throw new NotFoundException('Document was not found');
         }
 
-        return {...document, role: 'reader'};
+        return document;
     }
 
     async findOneAndUpdate(filterQuery: FilterQuery<TDocument>, updateQuery: UpdateQuery<TDocument>): Promise<TDocument> {
