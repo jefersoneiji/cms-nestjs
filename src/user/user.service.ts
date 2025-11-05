@@ -3,10 +3,16 @@ import bcrypt from 'bcryptjs';
 
 import { UserRepository } from './user.repository';
 import { SignUpDto } from './dto/signup.dto';
+import { RoleDocument } from '@app/common/schemas/role.schema';
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class UserService {
-    constructor(private readonly userRepository: UserRepository) { }
+    constructor(
+        @InjectModel(RoleDocument.name) private roleModel: Model<RoleDocument>,
+        private readonly userRepository: UserRepository
+    ) { }
 
     async signup(signupDto: SignUpDto) {
         await this.check_user_exists(signupDto);
@@ -35,5 +41,34 @@ export class UserService {
         }
 
         return user;
+    }
+
+    async check_permission(role: string, required_permission: string): Promise<boolean> {
+        const is_allowed = await this.roleModel.aggregate(
+            [
+                { $match: { name: role } },
+                {
+                    $lookup: {
+                        from: 'permissions',
+                        localField: 'permissions',
+                        foreignField: "_id",
+                        as: 'matching_permissions'
+                    }
+                },
+                {
+                    $match: {
+                        "matching_permissions.name": required_permission
+                    }
+                },
+                {
+                    $project: {
+                        matching_permissions: 0,
+                    }
+                }
+            ],
+            { lean: true }
+        );
+        console.log('RESULTS IN REQUIRED PERMISSION GUARD ARE: ', is_allowed);
+        return true;
     }
 }

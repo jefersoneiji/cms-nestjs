@@ -93,6 +93,9 @@ importers:
       jest:
         specifier: ^30.0.0
         version: 30.2.0(@types/node@22.19.0)(ts-node@10.9.2(@types/node@22.19.0)(typescript@5.9.3))
+      nestjs-seeder:
+        specifier: ^0.3.2
+        version: 0.3.2(@faker-js/faker@8.4.1)
       prettier:
         specifier: ^3.4.2
         version: 3.6.2
@@ -376,6 +379,10 @@ packages:
   '@eslint/plugin-kit@0.4.1':
     resolution: {integrity: sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@faker-js/faker@8.4.1':
+    resolution: {integrity: sha512-XQ3cU+Q8Uqmrbf2e0cIC/QN43sTBSC8KF12u29Mb47tWrt2hAgBXSgpZMj4Ao8Uk0iJcU99QsOCaIL8934obCg==}
+    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -2478,6 +2485,11 @@ packages:
   neo-async@2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
 
+  nestjs-seeder@0.3.2:
+    resolution: {integrity: sha512-dCuxmhWdjgAn1HT0K7ExuCmKQc7HCGihFgzYF4keVJkR94d+diVQQg9/K1aQFnBkH9XVuugUqi4OClfwt09XVQ==}
+    peerDependencies:
+      '@faker-js/faker': ^8.0.0
+
   node-abort-controller@3.1.1:
     resolution: {integrity: sha512-AGK2yQKIjRuqnc6VkX2Xj5d+QW8xZ87pa1UK6yA6ouUyuxfHuMP6umE5QK7UmTeOAymo+Zx1Fxiuw9rVx8taHQ==}
 
@@ -3544,6 +3556,8 @@ snapshots:
     dependencies:
       '@eslint/core': 0.17.0
       levn: 0.4.1
+
+  '@faker-js/faker@8.4.1': {}
 
   '@humanfs/core@0.19.1': {}
 
@@ -6003,6 +6017,10 @@ snapshots:
   negotiator@1.0.0: {}
 
   neo-async@2.6.2: {}
+
+  nestjs-seeder@0.3.2(@faker-js/faker@8.4.1):
+    dependencies:
+      '@faker-js/faker': 8.4.1
 
   node-abort-controller@3.1.1: {}
 

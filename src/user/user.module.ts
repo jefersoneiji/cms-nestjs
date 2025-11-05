@@ -3,12 +3,16 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { UserRepository } from './user.repository';
-import { UserDocument, UserSchema } from '@app/common';
+import { PermissionSchema, PermissionsDocument, RoleDocument, RoleSchema, UserDocument, UserSchema } from '@app/common';
 
 @Module({
   imports: [
     MongooseModule.forRootAsync({ useFactory: () => ({ uri: 'mongodb://localhost:27017/cms' }) }),
-    MongooseModule.forFeature([{ name: UserDocument.name, schema: UserSchema }])
+    MongooseModule.forFeature([
+      { name: UserDocument.name, schema: UserSchema },
+      { name: RoleDocument.name, schema: RoleSchema },
+      { name: PermissionsDocument.name, schema: PermissionSchema }
+    ])
   ],
   controllers: [UserController],
   providers: [UserService, UserRepository],
