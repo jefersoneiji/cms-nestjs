@@ -32,6 +32,10 @@ export class UserService {
         });
     }
 
+    async delete(_id: string) {
+        return this.userRepository.findOneAndDelete({ _id });
+    }
+
     private async check_user_exists(signupDto: SignUpDto) {
         try {
             await this.userRepository.findOne({ email: signupDto.email });
@@ -83,5 +87,9 @@ export class UserService {
 
     async getUser(getUserDto: GetUserDto) {
         return this.userRepository.findOne(getUserDto);
+    }
+
+    async findOne(_id: string) {
+        return await this.userRepository.findOne({ _id });
     }
 }
