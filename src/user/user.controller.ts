@@ -1,6 +1,9 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { SignUpDto } from './dto/signup.dto';
+import { EditDto } from './dto/edit.dto';
+import { CurrentUser, Permissions, RequiredPermissions, RequiredPermissionsGuard, UserDocument } from '@app/common';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Controller('user')
 export class UserController {
@@ -9,5 +12,15 @@ export class UserController {
     @Post('signup')
     async signup(@Body() signupDto: SignUpDto) {
         return this.userService.signup(signupDto);
+    }
+
+    @Post('edit')
+    @UseGuards(JwtAuthGuard, RequiredPermissionsGuard)
+    @RequiredPermissions(Permissions.edit_user)
+    async edit(
+        @CurrentUser() user: UserDocument,
+        @Body() editDto: EditDto
+    ) {
+        return this.userService.edit(user._id.toHexString(), editDto);
     }
 }

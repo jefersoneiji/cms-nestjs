@@ -3,7 +3,8 @@ import bcrypt from 'bcryptjs';
 
 const userSchema = new Schema({
     email: String,
-    password: String
+    password: String,
+    role: String
 });
 
 const permissionSchema = new Schema({
@@ -20,7 +21,11 @@ async function seed() {
     const connection = await mongoose.connect('mongodb://localhost:27017/cms');
     console.log('Seeding user...');
     const user_model = connection.model('userdocuments', userSchema);
-    await user_model.insertOne({ email: 'john@email.com', password: await bcrypt.hash('123456', 10), role: 'admin' });
+    await user_model.insertMany([
+        { email: 'admin@email.com', password: await bcrypt.hash('123456', 10), role: 'admin' },
+        { email: 'editor@email.com', password: await bcrypt.hash('123456', 10), role: 'editor' },
+        { email: 'reader@email.com', password: await bcrypt.hash('123456', 10), role: 'reader' }
+    ]);
 
     console.log('Seeding permissions...');
     const permissionModel = connection.model('permissionsdocuments', permissionSchema);

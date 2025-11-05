@@ -7,6 +7,7 @@ import { RoleDocument } from '@app/common/schemas/role.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { GetUserDto } from './dto/get-user.dto';
+import { EditDto } from './dto/edit.dto';
 
 @Injectable()
 export class UserService {
@@ -21,6 +22,13 @@ export class UserService {
         return this.userRepository.create({
             ...signupDto,
             password: await bcrypt.hash(signupDto.password, 10)
+        });
+    }
+
+    async edit(_id: string, editDto: EditDto) {
+        return this.userRepository.findOneAndUpdate({ _id }, {
+            ...editDto,
+            ...editDto.password ? { password: await bcrypt.hash(editDto.password, 10) } : {}
         });
     }
 
@@ -69,7 +77,7 @@ export class UserService {
             ],
             { lean: true }
         );
-        
+
         return is_allowed.length > 0;
     }
 
