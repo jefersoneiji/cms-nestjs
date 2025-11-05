@@ -1,4 +1,4 @@
-import { Injectable, UnprocessableEntityException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, UnprocessableEntityException } from '@nestjs/common';
 import bcrypt from 'bcryptjs';
 
 import { UserRepository } from './user.repository';
@@ -24,5 +24,16 @@ export class UserService {
             return;
         }
         throw new UnprocessableEntityException('E-mail already taken.');
+    }
+
+    async verifyUser(email: string, password: string) {
+        const user = await this.userRepository.findOne({ email });
+        const password_is_valid = await bcrypt.compare(password, user.password);
+
+        if (!password_is_valid) {
+            throw new UnauthorizedException('Invalid credentials.');
+        }
+
+        return user;
     }
 }
