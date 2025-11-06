@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 
 const userSchema = new Schema({
     email: String,
+    name: String,
     password: String,
     role: String
 });
@@ -22,9 +23,9 @@ async function seed() {
     console.log('Seeding user...');
     const user_model = connection.model('userdocuments', userSchema);
     await user_model.insertMany([
-        { email: 'admin@email.com', password: await bcrypt.hash('123456', 10), role: 'admin' },
-        { email: 'editor@email.com', password: await bcrypt.hash('123456', 10), role: 'editor' },
-        { email: 'reader@email.com', password: await bcrypt.hash('123456', 10), role: 'reader' }
+        { name: "John", email: 'admin@email.com', password: await bcrypt.hash('123456', 10), role: 'admin' },
+        { name: "Alfred", email: 'editor@email.com', password: await bcrypt.hash('123456', 10), role: 'editor' },
+        { name: "Jessica", email: 'reader@email.com', password: await bcrypt.hash('123456', 10), role: 'reader' }
     ]);
 
     console.log('Seeding permissions...');
