@@ -4,7 +4,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ArticleDocument, ArticleSchema } from '@app/common';
 import { ArticlesRepository } from './articles.repository';
 import { ArticlesService } from './articles.service';
-import { UserService } from 'src/user/user.service';
 import { UserModule } from 'src/user/user.module';
 
 @Module({
