@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { ArticlesService } from './articles.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
@@ -21,5 +21,12 @@ export class ArticlesController {
     @RequiredPermissions(Permissions.edit_article)
     async update(@Param('id') _id: string, @Body() updateArticleDto: UpdateArticleDto) {
         return await this.articlesService.update(_id, updateArticleDto);
+    }
+
+    @Get(':id')
+    @UseGuards(JwtAuthGuard, RequiredPermissionsGuard)
+    @RequiredPermissions(Permissions.read_article)
+    async read(@Param('id') _id: string) {
+        return await this.articlesService.read(_id);
     }
 }
