@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { ArticlesService } from './articles.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
@@ -28,5 +28,12 @@ export class ArticlesController {
     @RequiredPermissions(Permissions.read_article)
     async read(@Param('id') _id: string) {
         return await this.articlesService.read(_id);
+    }
+   
+    @Delete(':id')
+    @UseGuards(JwtAuthGuard, RequiredPermissionsGuard)
+    @RequiredPermissions(Permissions.delete_article)
+    async delete(@Param('id') _id: string) {
+        return await this.articlesService.delete(_id);
     }
 }

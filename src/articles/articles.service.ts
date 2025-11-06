@@ -18,4 +18,8 @@ export class ArticlesService {
     async read(_id: string) {
         return await this.articlesRepository.findOne({ _id });
     }
+
+    async delete(_id: string) {
+        return await this.articlesRepository.findOneAndDelete({ _id });
+    }
 }
