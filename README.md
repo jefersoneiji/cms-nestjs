@@ -19,7 +19,7 @@ $ pnpm install
 Once the project is running, the endpoints are available at:
 
 ```
-http://localhost:3000
+pnpm start:dev
 ```
 
 ---
