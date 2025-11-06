@@ -1,16 +1,13 @@
 import { IsNotEmpty, IsString } from "class-validator";
 import mongoose from "mongoose";
 
-export class CreateArticleDto {
+export class UpdateArticleDto {
     @IsString()
-    @IsNotEmpty()
     title: string;
 
     @IsString()
-    @IsNotEmpty()
     content: string;
 
     @IsString()
-    @IsNotEmpty()
     author_id: mongoose.Types.ObjectId;
 }
