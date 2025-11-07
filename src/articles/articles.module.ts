@@ -6,6 +6,7 @@ import { ArticlesRepository } from './articles.repository';
 import { ArticlesService } from './articles.service';
 import { UserModule } from 'src/user/user.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import Joi from 'joi';
 
 @Module({
   imports: [
@@ -19,6 +20,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     ]),
     ConfigModule.forRoot({
       isGlobal: true,
+      validationSchema: Joi.object({
+        MONGO_URL: Joi.string().required()
+      }),
       envFilePath: ['.env', '.env.development']
     })
   ],

@@ -5,6 +5,7 @@ import { UserService } from './user.service';
 import { UserRepository } from './user.repository';
 import { PermissionSchema, PermissionsDocument, RoleDocument, RoleSchema, UserDocument, UserSchema } from '@app/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import Joi from 'joi';
 
 @Module({
   imports:
@@ -20,6 +21,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       ]),
       ConfigModule.forRoot({
         isGlobal: true,
+        validationSchema: Joi.object({
+          MONGO_URL: Joi.string().required()
+        }),
         envFilePath: ['.env', '.env.development']
       })
     ],
