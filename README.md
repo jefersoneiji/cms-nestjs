@@ -25,9 +25,8 @@ MONGO_URL=mongodb://mongo:27017/cms
 
 ## How to run locally
 
-Once the project is running, the endpoints are available at:
-
-```
+Type the command below: 
+```bash
 pnpm start:dev
 ```
 
