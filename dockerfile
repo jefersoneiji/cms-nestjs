@@ -7,13 +7,14 @@ COPY pnpm-lock.yaml ./
 COPY nest-cli.json nest-cli.json
 
 RUN npm install -g pnpm 
+RUN npm install -g bun 
 
 COPY . .
 COPY libs libs 
 
 RUN pnpm install
 
-RUN pnpm run build auth
+RUN pnpm run build
 
 FROM node:alpine AS production
 
@@ -26,6 +27,7 @@ COPY package.json ./
 COPY pnpm-lock.yaml ./
 
 RUN npm install -g pnpm 
+RUN npm install -g bun 
 
 RUN pnpm install --prod
 

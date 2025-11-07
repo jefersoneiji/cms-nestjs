@@ -11,6 +11,7 @@ import { exec } from 'child_process';
   controllers: [AppController],
   providers: [AppService],
 })
+
 export class AppModule implements OnApplicationBootstrap {
   onApplicationBootstrap() {
     exec('bun seeder/seed.ts');

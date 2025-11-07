@@ -4,9 +4,9 @@ services:
       context: .
       dockerfile: ./dockerfile
       target: development
-    command: pnpm run start:dev 
-    # env_file:
-    #   - ./apps/reservations/.env
+    command: pnpm run start 
+    env_file:
+      - ./.env
     ports: 
       - 3000:3000
     volumes: 

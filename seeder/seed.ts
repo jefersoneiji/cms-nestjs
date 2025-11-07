@@ -26,7 +26,8 @@ const roleSchema = new Schema({
 });
 
 async function seed() {
-    const connection = await mongoose.connect('mongodb://localhost:27017/cms');
+    const mongo_url = process.env.NODE_ENV === 'development' ? 'localhost' : 'mongo';
+    const connection = await mongoose.connect(`mongodb://${mongo_url}:27017/cms`);
 
     console.log('Seeding user...');
     const user_model = connection.model('userdocuments', userSchema);

@@ -13,6 +13,15 @@ $ pnpm install
 ```
 
 ---
+## Environments (.env)
+Copy and paste this variable into the `.env` file before running the `docker compose up` command.
+
+Docker 
+```bash
+MONGO_URL=mongodb://mongo:27017/cms
+```
+
+---
 
 ## How to run locally
 

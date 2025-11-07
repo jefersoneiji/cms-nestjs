@@ -5,14 +5,22 @@ import { ArticleDocument, ArticleSchema } from '@app/common';
 import { ArticlesRepository } from './articles.repository';
 import { ArticlesService } from './articles.service';
 import { UserModule } from 'src/user/user.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
     UserModule,
-    MongooseModule.forRootAsync({ useFactory: () => ({ uri: 'mongodb://localhost:27017/cms' }) }),
+    MongooseModule.forRootAsync({
+      useFactory: (configService: ConfigService) => ({ uri: configService.get<string>('MONGO_URL') }),
+      inject: [ConfigService]
+    }),
     MongooseModule.forFeature([
       { name: ArticleDocument.name, schema: ArticleSchema },
-    ])
+    ]),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: ['.env', '.env.development']
+    })
   ],
   controllers: [ArticlesController],
   providers: [ArticlesRepository, ArticlesService]
