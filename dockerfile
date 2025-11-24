@@ -10,7 +10,6 @@ RUN npm install -g pnpm
 RUN npm install -g bun 
 
 COPY . .
-COPY libs libs 
 
 RUN pnpm install
 
