@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: ./dockerfile
       target: development
-    command: pnpm run start 
+    command: pnpm run start
     env_file:
       - ./.env
     ports: 

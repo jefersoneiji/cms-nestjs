@@ -14,6 +14,8 @@ import { exec } from 'child_process';
 
 export class AppModule implements OnApplicationBootstrap {
   onApplicationBootstrap() {
-    exec('bun seeder/seed.ts');
+    if(process.env.NODE_ENV !== "production"){
+      exec('bun seeder/seed.ts');
+    }
   }
 }
